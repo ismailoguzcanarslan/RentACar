@@ -1,6 +1,7 @@
 ﻿using Application.Features.Brands.Queries.GetById;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.PipeLines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -12,10 +13,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Brands.Commands.Update;
 
-public class UpdateBrandCommand : IRequest<UpdateBrandResponse>
+public class UpdateBrandCommand : IRequest<UpdateBrandResponse>, ICacheRemoverRequest
 {
     public string Name { get; set; }
     public Guid Id { get; set; }
+
+    public string? CacheKey => "";
+
+    public bool ByPassCache { get; }
+
+    public string? CacheGroupKey => "GetBrands";
 
     public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, UpdateBrandResponse>
     {

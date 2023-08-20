@@ -17,9 +17,11 @@ public class CreateBrandCommand : IRequest<CreatedBrandResponse>, ICacheRemoverR
 {
     public string Name { get; set; }
 
-    public string CacheKey => throw new NotImplementedException();
+    public string? CacheKey => "";
 
-    public bool ByPassCache => throw new NotImplementedException();
+    public bool ByPassCache { get; }
+
+    public string? CacheGroupKey => "GetBrands";
 
     public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, CreatedBrandResponse>, ITransactionalRequest
     {
